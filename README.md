@@ -1,5 +1,7 @@
 # Set up a proxyless gRPC service mesh
 
+This is a sample guide on setting up a gRPC service mesh using Traffic Director and GKE.
+
 ### Enable the required Google Cloud API services
 ```
 gcloud services enable --project=$PROJECT_ID \
