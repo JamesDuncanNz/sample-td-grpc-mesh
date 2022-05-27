@@ -1,0 +1,9 @@
+name: helloworld-grpc-route
+hostnames:
+- helloworld
+meshes:
+- projects/$PROJECT_ID/locations/global/meshes/grpc-mesh
+rules:
+- action:
+    destinations:
+    - serviceName: projects/$PROJECT_ID/locations/global/backendServices/grpc-helloworld-service

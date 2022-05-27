@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-sleeper
+  namespace: default
+  annotations:
+    sidecar.istio.io/inject: "false"
+spec:
+  containers:
+  - image: curlimages/curl:7.82.0
+    imagePullPolicy: IfNotPresent
+    name: sleeper
+    command:
+    - sleep
+    - 365d
+    env:
+    - name: GRPC_XDS_BOOTSTRAP
+      value: "/tmp/grpc-xds/td-grpc-bootstrap.json"
+    volumeMounts:
+    - name: grpc-td-conf
+      mountPath: /tmp/grpc-xds/
+  initContainers:
+  - args:
+    - --config-mesh-experimental
+    - "grpc-mesh"
+    - --output
+    - "/tmp/bootstrap/td-grpc-bootstrap.json"
+    image: gcr.io/trafficdirector-prod/td-grpc-bootstrap:0.14.0
+    imagePullPolicy: IfNotPresent
+    name: grpc-td-init
+    volumeMounts:
+    - name: grpc-td-conf
+      mountPath: /tmp/bootstrap/
+  volumes:
+  - name: grpc-td-conf
+    emptyDir:
+      medium: Memory
