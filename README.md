@@ -64,7 +64,6 @@ gcloud compute firewall-rules create grpc-vm-allow-health-checks \
   --action=ALLOW \
   --direction=INGRESS \
   --source-ranges=35.191.0.0/16,130.211.0.0/22 \
-  --target-tags allow-health-checks \
   --rules=tcp,udp
 ```
 ### Create Backend Service
